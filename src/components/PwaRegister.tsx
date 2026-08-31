@@ -1,0 +1,29 @@
+'use client';
+
+import { useEffect } from 'react';
+
+export default function PwaRegister() {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('/service-worker.js')
+          .then((registration) => {
+            console.log('Service Worker registered successfully with scope:', registration.scope);
+          })
+          .catch((error) => {
+            console.error('Service Worker registration failed:', error);
+          });
+      });
+    }
+
+    // Request notification permission if supported
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      if (Notification.permission === 'default') {
+        // Notification.requestPermission();
+      }
+    }
+  }, []);
+
+  return null;
+}
